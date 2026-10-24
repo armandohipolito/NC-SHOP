@@ -268,6 +268,24 @@ const products = [
       <button class="buy" onclick="addToCart(${p.id})">Agregar al carrito</button>
     </article>`).join("");
 }
+    function activarAnimaciones() {
+  const productos = document.querySelectorAll(".product");
+
+  const observer = new IntersectionObserver((entradas) => {
+    entradas.forEach((entrada) => {
+      if (entrada.isIntersecting) {
+        entrada.target.classList.add("visible");
+        observer.unobserve(entrada.target);
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  productos.forEach((producto) => {
+    observer.observe(producto);
+  });
+}
     function addToCart(id) {
       const found = cart.find(item => item.id === id);
       if (found) found.qty++;
